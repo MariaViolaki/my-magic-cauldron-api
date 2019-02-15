@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const knex = require ('knex');
 const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
 
 const signup = require('./controllers/signup');
 const login = require('./controllers/login');
@@ -23,7 +24,7 @@ const db = knex({
 
 const app = express();
 
-// Middleware to access the body of requests
+app.use(cors());
 app.use(bodyParser.json());
 
 /*******************************************/

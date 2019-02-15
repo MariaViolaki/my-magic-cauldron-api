@@ -32,13 +32,17 @@ const handleSignUp = (req, res, db, bcrypt) => {
 				});
 			});
 		})
-		.then(data => {
-			res.json(data);
+		.then(() => {
+			return db('users')
+				.select('*')
+				.where('username', '=', username)
+				.then(user => {
+					res.json(user[0]);
+			});
 		})
 		.catch(err => {
 			res.status(400).json('Could not sign up');
 		});
-
 	} else {
 		res.status(400).json('Empty fields not allowed');
 	}

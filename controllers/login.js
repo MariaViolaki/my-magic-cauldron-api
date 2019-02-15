@@ -1,13 +1,12 @@
 const handleLogIn = (req, res, db, bcrypt) => {
-	const { username, email, password } = req.body;
+	const { username_email, password } = req.body;
 	
-	if ((username.length > 0 || email.length > 0)
-			&& password.length > 0) {
+	if (username_email.length > 0 && password.length > 0) {
 
 		db('login')
 		.select('*')
-		.where('username', '=', username)
-		.orWhere('email', '=', email)
+		.where('username', '=', username_email)
+		.orWhere('email', '=', username_email)
 		.then(data => {
 			const isValid = bcrypt.compareSync(
 				password, data[0].hash
@@ -15,8 +14,8 @@ const handleLogIn = (req, res, db, bcrypt) => {
 			if (isValid) {
 				return db('users')
 				.select('*')
-				.where('username', '=', username)
-				.orWhere('email', '=', email)
+				.where('username', '=', username_email)
+				.orWhere('email', '=', username_email)
 				.then(user => {
 					res.json(user[0]);
 				})
