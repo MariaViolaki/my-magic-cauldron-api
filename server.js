@@ -6,6 +6,9 @@ const cors = require('cors');
 
 const signup = require('./controllers/signup');
 const login = require('./controllers/login');
+const newname = require('./controllers/newname');
+const newusername = require('./controllers/newusername');
+const newemail = require('./controllers/newemail');
 const deactivate = require('./controllers/deactivate');
 const game = require('./controllers/game');
 
@@ -40,14 +43,26 @@ app.post('/signup', (req, res) => {
 
 app.post('/login', (req, res) => {
 	login.handleLogIn(req, res, db, bcrypt);
-})
+});
 
-app.put('/game', (req, res) => {
-	game.handleGame(req, res, db);
+app.put('/newname', (req, res) => {
+	newname.handleNewName(req, res, db);
+});
+
+app.put('/newusername', (req, res) => {
+	newusername.handleNewUsername(req, res, db);
+});
+
+app.put('/newemail', (req, res) => {
+	newemail.handleNewEmail(req, res, db);
 });
 
 app.delete('/deactivate', (req, res) => {
 	deactivate.handleDeactivate(req, res, db);
+});
+
+app.put('/game', (req, res) => {
+	game.handleGame(req, res, db);
 });
 
 
