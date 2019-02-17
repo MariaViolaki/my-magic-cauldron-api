@@ -2,8 +2,8 @@ const handleSignUp = (req, res, db, bcrypt) => {
 	const { 
 		name, username, email, password
 	} = req.body;
-
 	const hash = bcrypt.hashSync(password);
+	const profile = [];
 
 	if (name.length > 0 &&
 			username.length > 0 &&
@@ -37,8 +37,23 @@ const handleSignUp = (req, res, db, bcrypt) => {
 				.select('*')
 				.where('username', '=', username)
 				.then(user => {
-					res.json(user[0]);
-			});
+					profile.push(user[0]);
+				})
+				.then(() => {
+					return db('potions')
+					.select('*')
+					.where('username', '=', username)
+					.then(potions => {
+						profile.push(potions[0]);
+						res.json(profile);
+					})
+					.catch(err => {
+						res.status(400).json('Could not get potions');
+					});
+				})
+				.catch(err => {
+					res.status(400).json('Could not get profile');
+				});
 		})
 		.catch(err => {
 			res.status(400).json('Could not sign up');

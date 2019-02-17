@@ -26,7 +26,6 @@ const handleLogIn = (req, res, db, bcrypt) => {
 					.where('username', '=', profile[0].username)
 					.then(potions => {
 						profile.push(potions[0]);
-						console.log(profile);
 						res.json(profile);
 					})
 					.catch(err => {
