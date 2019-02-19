@@ -1,5 +1,7 @@
 const handleNewEmail = (req, res, db) => {
 	const { username, newEmail } = req.body;
+	const profile = [];
+
 	db('users')
 	.where('username', '=', username)
 	.update({
@@ -15,7 +17,14 @@ const handleNewEmail = (req, res, db) => {
 			return db('users')
 			.select('*')
 			.where('username', '=', username)
-			.then((data) => res.json(data[0]));
+			.then((user) => profile.push(user[0]))
+			.then(() => {
+				return db('potions')
+				.select('*')
+				.where('username', '=', username)
+				.then((potions) => profile.push(potions[0]))
+				.then(() => res.json(profile));
+			})
 		})
 	})
 	.catch((err) => res.status(400).json(err));
