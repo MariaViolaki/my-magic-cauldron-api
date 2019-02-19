@@ -48,7 +48,7 @@ const handleGame = (req, res, db) => {
 				})
 			})
 		} else {
-			res.json(potion[0].code);
+			res.json('');
 		}
 	})
 	.catch(err => {
@@ -70,7 +70,7 @@ const handleGame = (req, res, db) => {
 				})
 			})
 		} else {
-			res.json('veiledpanacea');
+			res.json('');
 		}
 	});
 };
