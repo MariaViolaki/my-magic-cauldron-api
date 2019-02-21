@@ -69,6 +69,6 @@ app.put('/game', (req, res) => {
 /*******************************************/
 
 
-app.listen(3002, () => {
-	console.log('App is running on port 3002');
+app.listen(process.env.PORT || 3002, () => {
+	console.log(`App is running on port ${process.env.PORT}`);
 });
